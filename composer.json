@@ -1,0 +1,21 @@
+{
+  "name": "cheprasov/php-benchmark-tests",
+  "version": "0.1.0",
+  "description": "Benchmark tests for php",
+  "homepage": "https://github.com/cheprasov/php-benchmark-tests",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander Cheprasov",
+      "email": "cheprasov.84@ya.ru"
+    }
+  ],
+  "autoload": {
+    "psr-0": {"": "src/"}
+  },
+  "require": {
+    "php": ">=5.4",
+    "cheprasov/php-simple-profiler": "1.0.*"
+  }
+}
