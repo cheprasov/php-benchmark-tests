@@ -12,4 +12,4 @@ require __DIR__.'/vendor/autoload.php';
 
 use BenchmarkTests\Benchmark;
 
-Benchmark::run();
+Benchmark::run(__DIR__.'/src/BenchmarkTests/Test', $argv);

@@ -21,16 +21,32 @@ class Benchmark {
     const DEFAULT_LOCAL_ITERATIONS_COUNT = 1000;
 
     /**
-     *
+     * @param string $dir
+     * @param string[] $argv
      */
-    public static function run() {
-        $methods = get_class_methods(self::class);
-        foreach ($methods as $method) {
-            if (strpos($method, self::TEST_METHOD_PREFIX) !== 0) {
-                continue;
+    public static function run($dir, array $argv) {
+        $files = self::getTests($dir, empty($argv[1]) ? null : $argv[1]);
+        foreach ($files as $file) {
+            echo PHP_EOL . $file;
+            $tests = include($file);
+            foreach ($tests as $test) {
+                self::runTest($test['name'], $test['tests']);
             }
-            call_user_func([self::class, $method]);
         }
+    }
+
+    /**
+     * @param string $dir
+     * @param string|null $preg
+     * @return array
+     */
+    protected static function getTests($dir, $preg = null) {
+        $files = array_filter(scandir($dir), function($file) use ($preg, $dir) {
+            return is_file($dir .'/'. $file) && (!$preg || preg_match('/'.$preg.'/', $file));
+        });
+        return array_map(function($file) use ($dir) {
+            return $dir .'/'. $file;
+        }, $files);
     }
 
     /**
@@ -59,54 +75,6 @@ class Benchmark {
             }
         }
         Profiler::echoTimerStat();
-    }
-
-    /**
-     * Sprintf vs Single and Double Quotes
-     */
-    public static function testSprintfVsQuotes() {
-        self::runTest('Sprintf vs Single and Double Quotes', [
-            'sprintf' => function($i, $j) {
-                return sprintf('%s:%s:%s%s', $i, $j, $i, $j);
-            },
-            'single quotes' => function($i, $j) {
-                return $i . ':' . $j . ':' . $i . $j;
-            },
-            'double quotes' => function($i, $j) {
-                return "$i:$j:$i$j";
-            },
-        ]);
-    }
-
-    /**
-     * Strlen($a) < 1 vs Strlen($a) === 0 vs $a === ''
-     */
-    public static function testStrlenVsSame() {
-        self::runTest('Strlen vs === (not empty)', [
-            'strlen($a) < 1' => function($i, $j) {
-                return strlen($i.$j) < 1;
-            },
-            'strlen($a) === 0' => function($i, $j) {
-                return strlen($i.$j) === 0;
-            },
-            '$a === \'\'' => function($i, $j) {
-                return $i.$j === '';
-            },
-        ]);
-        self::runTest('Strlen vs === (empty)', [
-            'strlen($a) < 1' => function($i, $j) {
-                $a = '';
-                return strlen($a) < 1;
-            },
-            'strlen($a) === 0' => function($i, $j) {
-                $a = '';
-                return strlen($a) === 0;
-            },
-            '$a === \'\'' => function($i, $j) {
-                $a = '';
-                return $a === '';
-            },
-        ]);
     }
 
 }
