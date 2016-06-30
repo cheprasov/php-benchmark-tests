@@ -21,14 +21,14 @@ return [
                 return $s - 0;
             },
 
-            '$s < 0' => function($i, $j) {
+            '$s << 0' => function($i, $j) {
                 $s = $i . $j;
-                return $s < 0;
+                return $s << 0;
             },
 
-            '$s > 0' => function($i, $j) {
+            '$s >> 0' => function($i, $j) {
                 $s = $i . $j;
-                return $s > 0;
+                return $s >> 0;
             },
 
             '(int) $s' => function($i, $j) {
