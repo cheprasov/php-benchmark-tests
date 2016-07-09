@@ -14,16 +14,16 @@ return [
     [
         'name' => 'Convert to string',
         'tests' => [
-            '"$i"' => function($i, $j) {
+            '"$i"' => function($i) {
                 return "$i";
             },
 
-            '$i.\'\'' => function($i, $j) {
+            '$i.\'\'' => function($i) {
                 return $i.'';
             },
 
-            '(string) $i' => function($i, $j) {
-                return (array) $i;
+            '(string) $i' => function($i) {
+                return (string) $i;
             },
         ],
     ],

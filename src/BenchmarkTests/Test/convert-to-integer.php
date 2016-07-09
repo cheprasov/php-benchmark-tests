@@ -9,44 +9,42 @@
  * file that was distributed with this source code.
  */
 
+use BenchmarkTests\Generator;
+
 return [
 
     [
         'name' => 'Convert to integer',
+        'generator' => function() {
+            return [Generator::integerAsString()];
+        },
         'tests' => [
 
-            '$s * 1' => function($i, $j) {
-                $s = $i . $j;
+            '$s * 1' => function($s) {
                 return $s * 1;
             },
 
-            '$s + 0' => function($i, $j) {
-                $s = $i . $j;
+            '$s + 0' => function($s) {
                 return $s + 0;
             },
 
-            '$s - 0' => function($i, $j) {
-                $s = $i . $j;
+            '$s - 0' => function($s) {
                 return $s - 0;
             },
 
-            '$s << 0' => function($i, $j) {
-                $s = $i . $j;
+            '$s << 0' => function($s) {
                 return $s << 0;
             },
 
-            '$s >> 0' => function($i, $j) {
-                $s = $i . $j;
+            '$s >> 0' => function($s) {
                 return $s >> 0;
             },
 
-            '(int) $s' => function($i, $j) {
-                $s = $i . $j;
+            '(int) $s' => function($s) {
                 return (int) $s;
             },
 
-            '$s | 0' => function($i, $j) {
-                $s = $i . $j;
+            '$s | 0' => function($s) {
                 return $s | 0;
             },
         ],

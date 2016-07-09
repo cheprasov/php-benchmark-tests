@@ -30,7 +30,7 @@ class Benchmark {
             echo PHP_EOL . $file;
             $tests = include($file);
             foreach ($tests as $test) {
-                self::runTest($test['name'], $test['tests']);
+                self::runTest($test);
             }
         }
     }
@@ -50,30 +50,42 @@ class Benchmark {
     }
 
     /**
-     * @param string $testName
-     * @param \Closure[] $callbacks
-     * @param int $globalCount
-     * @param int $count
+     * @param array $test
      */
-    public static function runTest(
-        $testName = null,
-        array $callbacks,
-        $globalCount = self::DEFAULT_GLOBAL_ITERATIONS_COUNT,
-        $count = self::DEFAULT_LOCAL_ITERATIONS_COUNT
-    ) {
-        if (!$testName) {
-            $testName = implode(' vs ', array_keys($callbacks));
-        }
+    public static function runTest(array $test) {
+        $tests = &$test['tests'];
+
+        $testName = !isset($test['name'])
+            ? implode(' vs ', array_keys($tests))
+            : $test['name'];
+
+        $globalCount = isset($test['globalCount'])
+            ? (int) $test['globalCount']
+            : self::DEFAULT_GLOBAL_ITERATIONS_COUNT;
+
+        $localCount = isset($test['localCount'])
+            ? (int) $test['localCount']
+            : self::DEFAULT_LOCAL_ITERATIONS_COUNT;
+
+        $generator = isset($test['generator'])
+            ? $test['generator']
+            : function($i) {return [$i]; };
+
         Profiler::clear();
+
         for ($i = 0; $i < $globalCount; ++$i) {
-            foreach($callbacks as $name => $callback) {
+            $testData = $generator($i);
+
+            foreach($tests as $name => $callback) {
                 Profiler::start($testName .'.'. $name);
-                for ($j = 0; $j < $count; ++$j) {
-                    $callback($i, $j);
+                for ($j = 0; $j < $localCount; ++$j) {
+                    call_user_func_array($callback, $testData);
                 }
                 Profiler::stop();
             }
+
         }
+
         Profiler::echoTimerStat();
     }
 

@@ -14,22 +14,21 @@ use BenchmarkTests\Generator;
 return [
 
     [
-        'name' => 'Sprintf vs Single and Double Quotes',
+        'name' => 'Test Example',
         'generator' => function() {
-            return [
-                Generator::scalar(),
-                Generator::scalar(),
-            ];
+            return [Generator::scalar()];
         },
         'tests' => [
-            'sprintf' => function($i, $j) {
-                return sprintf('%s:%s:%s%s', $i, $j, $i, $j);
+            'is_string($v)' => function($v) {
+                return is_string($v);
             },
-            'single quotes' => function($i, $j) {
-                return $i . ':' . $j . ':' . $i . $j;
+
+            'is_bool($v)' => function($v) {
+                return is_bool($v);
             },
-            'double quotes' => function($i, $j) {
-                return "$i:$j:$i$j";
+
+            'is_int($v)' => function($v) {
+                return is_int($v);
             },
         ],
     ],

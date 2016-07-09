@@ -9,66 +9,29 @@
  * file that was distributed with this source code.
  */
 
+use BenchmarkTests\Generator;
+
 return [
 
     [
-        'name' => 'strlen() vs Identical (not empty)',
+        'name' => 'strlen() vs Identical (===)',
+        'generator' => function($i) {
+            return [$i % 2 ? md5($i) : ''];
+        },
         'tests' => [
-            'strlen($a) < 1' => function($i, $j) {
-                $a = $i.$j;
-                return strlen($a) < 1;
+
+            'strlen($s) === 0' => function($s) {
+                return strlen($s) === 0;
             },
 
-            'strlen($a) === 0' => function($i, $j) {
-                $a = $i.$j;
-                return strlen($a) === 0;
+            'strlen($s) < 1' => function($s) {
+                return strlen($s) < 1;
             },
 
-            '$a === \'\'' => function($i, $j) {
-                $a = $i.$j;
-                return $a === '';
-            },
-
-        ],
-    ],
-
-    [
-        'name' => 'strlen() vs Identical (empty)',
-        'tests' => [
-            'strlen($a) < 1' => function() {
-                $a = '';
-                return strlen($a) < 1;
-            },
-
-            'strlen($a) === 0' => function() {
-                $a = '';
-                return strlen($a) === 0;
-            },
-
-            '$a === \'\'' => function() {
-                $a = '';
-                return $a === '';
+            '$s === \'\'' => function($s) {
+                return $s === '';
             },
         ],
     ],
 
-    [
-        'name' => 'strlen() vs Identical (mix)',
-        'tests' => [
-            'strlen($a) < 1' => function($i) {
-                $a = $i % 2 ? 'Test some text'.$i : '';
-                return strlen($a) < 1;
-            },
-
-            'strlen($a) === 0' => function($i) {
-                $a = $i % 2 ? 'Test some text'.$i : '';
-                return strlen($a) === 0;
-            },
-
-            '$a === \'\'' => function($i) {
-                $a = $i % 2 ? 'Test some text'.$i : '';
-                return $a === '';
-            },
-        ],
-    ],
 ];

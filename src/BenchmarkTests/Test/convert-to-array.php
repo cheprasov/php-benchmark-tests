@@ -12,16 +12,48 @@
 return [
 
     [
-        'name' => 'Convert to array',
+        'name' => 'Convert to array (random)',
+        'generator' => function($i) {
+            switch ($i % 5) {
+                case 0: return [$i];
+                case 1: return [(string) $i];
+                case 2: return [$i . M_PI];
+                case 3: return [(bool) $i];
+                case 4: return [[$i, ++$i]];
+            }
+            return [null];
+        },
         'tests' => [
-            '[$a]' => function($i, $j) {
-                $a = $i.$j;
-                return [$a];
+            '[$v]' => function($v) {
+                return [$v];
             },
 
-            '(array) $a' => function($i, $j) {
-                $a = $i.$j;
-                return (array) $a;
+            '(array) $v' => function($v) {
+                return (array) $v;
+            },
+
+            'is_array($v) ? $v : [$v]' => function($v) {
+                return is_array($v) ? $v : [$v];
+            },
+        ],
+    ],
+
+    [
+        'name' => 'Convert to array (array)',
+        'generator' => function($i) {
+            return [array_fill(0, mt_rand(0, 10), $i)];
+        },
+        'tests' => [
+            '[$v]' => function($v) {
+                return [$v];
+            },
+
+            '(array) $v' => function($v) {
+                return (array) $v;
+            },
+
+            'is_array($v) ? $v : [$v]' => function($v) {
+                return is_array($v) ? $v : [$v];
             },
         ],
     ],

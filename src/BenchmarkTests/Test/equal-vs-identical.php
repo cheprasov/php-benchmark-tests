@@ -9,12 +9,20 @@
  * file that was distributed with this source code.
  */
 
+use BenchmarkTests\Generator;
+
 return [
 
     [
         'name' => 'Equal (==) va Identical (===) for Int',
+        'generator' => function($i) {
+            return [
+                mt_rand(0, 1) + $i,
+                mt_rand(0, 1) + $i
+            ];
+        },
         'tests' => [
-            
+
             'int: $i == $j' => function($i, $j) {
                 return $i == $j;
             },
@@ -28,6 +36,12 @@ return [
 
     [
         'name' => 'Equal (==) va Identical (===) for String',
+        'generator' => function($i) {
+            return [
+                md5(mt_rand(0, 1) + $i),
+                md5(mt_rand(0, 1) + $i)
+            ];
+        },
         'tests' => [
 
             'string: $a == $b' => function($i, $j) {
@@ -47,6 +61,12 @@ return [
 
     [
         'name' => 'Equal (==) va Identical (===) for mixed',
+        'generator' => function() {
+            return [
+                Generator::scalar(),
+                Generator::scalar()
+            ];
+        },
         'tests' => [
 
             '$a == $j' => function($i, $j) {
