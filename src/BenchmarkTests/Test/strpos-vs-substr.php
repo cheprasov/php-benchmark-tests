@@ -32,11 +32,11 @@ return [
                 return $s1 === substr($s, 0, $l);
             },
 
-            '0 === strpos($s, $s1)' => function($s, $s1) {
+            '0 === strpos($s, $s1)' => function($s, $s1, $l) {
                 return 0 === strpos($s, $s1);
             },
 
-            
+
         ],
     ],
 
