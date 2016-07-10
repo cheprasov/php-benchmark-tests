@@ -17,8 +17,7 @@ return [
         'name' => 'strpos vs substr',
         'generator' => function($i) {
             $s = str_repeat(md5($i), mt_rand(1, 5));
-            $l = mt_rand(1
-                , 10);
+            $l = mt_rand(1, 10);
             return [
                 $s,
                 substr($s, $i % 2, $l),
