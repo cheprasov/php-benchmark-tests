@@ -27,7 +27,7 @@ class Benchmark {
     public static function run($dir, array $argv) {
         $files = self::getTests($dir, empty($argv[1]) ? null : $argv[1]);
         foreach ($files as $file) {
-            echo PHP_EOL . $file;
+            echo PHP_EOL, $file, PHP_EOL;
             $tests = include($file);
             foreach ($tests as $test) {
                 self::runTest($test);
@@ -86,7 +86,7 @@ class Benchmark {
 
         }
 
-        Profiler::echoTimerStat();
+        echo PHP_EOL, $testName, PHP_EOL, Profiler::getTimerTableStat(['cost', 'name', 'count', 'time']), PHP_EOL;
     }
 
 }

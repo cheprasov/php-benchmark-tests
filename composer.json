@@ -16,6 +16,6 @@
   },
   "require": {
     "php": ">=5.4",
-    "cheprasov/php-simple-profiler": "1.0.*"
+    "cheprasov/php-simple-profiler": "1.*"
   }
 }
