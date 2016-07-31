@@ -14,13 +14,18 @@ use BenchmarkTests\Generator;
 return [
 
     [
-        'name' => 'Equal (==) va Identical (===) for Int',
-        'generator' => function($i) {
-            return [
-                mt_rand(0, 1) + $i,
-                mt_rand(0, 1) + $i
-            ];
-        },
+        'name' => 'Equal (==) va Identical (===) for %s',
+        'generator' => [
+            'integers' => function($i) {
+                return [mt_rand(0, 1) + $i, mt_rand(0, 1) + $i];
+            },
+            'strings' => function($i) {
+                return [md5(mt_rand(0, 1) + $i), md5(mt_rand(0, 1) + $i)];
+            },
+            'mixed' => function($i) {
+                return [Generator::getScalar(), Generator::getScalar()];
+            },
+        ],
         'tests' => [
 
             'int: $i == $j' => function($i, $j) {
@@ -29,54 +34,6 @@ return [
 
             'int: $i === $j' => function($i, $j) {
                 return $i === $j;
-            },
-
-        ],
-    ],
-
-    [
-        'name' => 'Equal (==) va Identical (===) for String',
-        'generator' => function($i) {
-            return [
-                md5(mt_rand(0, 1) + $i),
-                md5(mt_rand(0, 1) + $i)
-            ];
-        },
-        'tests' => [
-
-            'string: $a == $b' => function($i, $j) {
-                $a = (string) $i;
-                $b = (string) $j;
-                return $a == $b;
-            },
-
-            'string: $a === $b' => function($i, $j) {
-                $a = (string) $i;
-                $b = (string) $j;
-                return $a === $b;
-            },
-
-        ],
-    ],
-
-    [
-        'name' => 'Equal (==) va Identical (===) for mixed',
-        'generator' => function() {
-            return [
-                Generator::getScalar(),
-                Generator::getScalar()
-            ];
-        },
-        'tests' => [
-
-            '$a == $j' => function($i, $j) {
-                $a = (string) $i;
-                return $a == $j;
-            },
-
-            '$a === $b' => function($i, $j) {
-                $a = (string) $i;
-                return $a === $j;
             },
 
         ],

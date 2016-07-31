@@ -12,7 +12,6 @@
 use BenchmarkTests\Generator;
 
 return [
-
     [
         'name' => 'Test Example',
         'generator' => function() {
