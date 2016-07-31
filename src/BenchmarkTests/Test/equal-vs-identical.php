@@ -63,8 +63,8 @@ return [
         'name' => 'Equal (==) va Identical (===) for mixed',
         'generator' => function() {
             return [
-                Generator::scalar(),
-                Generator::scalar()
+                Generator::getScalar(),
+                Generator::getScalar()
             ];
         },
         'tests' => [

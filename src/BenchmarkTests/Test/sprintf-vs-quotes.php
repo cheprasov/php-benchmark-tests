@@ -17,8 +17,8 @@ return [
         'name' => 'Sprintf vs Single and Double Quotes',
         'generator' => function() {
             return [
-                Generator::scalar(),
-                Generator::scalar(),
+                Generator::getScalar(),
+                Generator::getScalar(),
             ];
         },
         'tests' => [

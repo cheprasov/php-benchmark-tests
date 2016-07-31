@@ -22,6 +22,10 @@ return [
                 return $i.'';
             },
 
+            'strval($i)' => function($i) {
+                return strval($i);
+            },
+
             '(string) $i' => function($i) {
                 return (string) $i;
             },

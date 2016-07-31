@@ -28,7 +28,20 @@ class Benchmark {
         $files = self::getTests($dir, empty($argv[1]) ? null : $argv[1]);
         foreach ($files as $file) {
             echo PHP_EOL, $file, PHP_EOL;
-            $tests = include($file);
+            $testData = include($file);
+            $tests = [];
+            foreach ($testData as $test) {
+                if (isset($test['generator']) && is_array($test['generator'])) {
+                    foreach ($test['generator'] as $name => $gen) {
+                        $newTest = $test;
+                        $newTest['generator'] = $gen;
+                        $newTest['name'] = sprintf($test['name'], $name);
+                        $tests[] = $newTest;
+                    }
+                } else {
+                    $tests[] = $test;
+                }
+            }
             foreach ($tests as $test) {
                 self::runTest($test);
             }
@@ -69,7 +82,7 @@ class Benchmark {
 
         $generator = isset($test['generator'])
             ? $test['generator']
-            : function($i) {return [$i]; };
+            : function($i) {return [$i];};
 
         Profiler::clear();
 

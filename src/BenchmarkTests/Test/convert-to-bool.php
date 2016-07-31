@@ -16,7 +16,7 @@ return [
     [
         'name' => 'Convert to bool',
         'generator' => function() {
-            return [Generator::scalar()];
+            return [Generator::getScalar()];
         },
         'tests' => [
 
@@ -26,6 +26,10 @@ return [
 
             '(bool) $v' => function($v) {
                 return (bool) $v;
+            },
+
+            'boolval($v)' => function($v) {
+                return boolval($v);
             },
 
             '$v || false' => function($v) {

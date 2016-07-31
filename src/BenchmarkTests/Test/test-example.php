@@ -16,7 +16,7 @@ return [
     [
         'name' => 'Test Example',
         'generator' => function() {
-            return [Generator::scalar()];
+            return [Generator::getScalar()];
         },
         'tests' => [
             'is_string($v)' => function($v) {

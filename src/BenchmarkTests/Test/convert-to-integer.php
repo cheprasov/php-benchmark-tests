@@ -16,7 +16,7 @@ return [
     [
         'name' => 'Convert to integer',
         'generator' => function() {
-            return [Generator::integerAsString()];
+            return [Generator::getNumberInString()];
         },
         'tests' => [
 
@@ -42,6 +42,10 @@ return [
 
             '(int) $s' => function($s) {
                 return (int) $s;
+            },
+
+            'intval($s)' => function($s) {
+                return intval($s);
             },
 
             '$s | 0' => function($s) {

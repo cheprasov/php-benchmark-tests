@@ -16,7 +16,7 @@ class Generator {
      * Generate scalars
      * @return array
      */
-    public static function scalar() {
+    public static function getScalar() {
         switch ($i = mt_rand(0, 5)) {
             case 0: return $i;
             case 1: return md5($i);
@@ -32,7 +32,7 @@ class Generator {
      * @param int $max
      * @return array
      */
-    public static function integerAsString($max = 100) {
+    public static function getNumberInString($max = 100) {
         return (string) mt_rand(0, $max);
     }
 }
